@@ -61,6 +61,20 @@ func (o *LLM) GenerateContent(ctx context.Context, messages []llms.MessageConten
 		// Look at all the parts in mc; expect to find a single Text part and
 		// any number of binary parts.
 		var text string
+		foundText := false
+
+		for _, p := range mc.Parts {
+			switch pt := p.(type) {
+			case llms.TextContent:
+				if foundText {
+					return nil, errors.New("expecting a single Text content")
+				}
+				foundText = true
+				text = pt.Text
+			default:
+				return nil, errors.New("only support Text parts right now")
+			}
+		}
 
 		msg.Content = text
 		msgs = append(msgs, msg)

@@ -27,9 +27,7 @@ type Doer interface {
 }
 
 // New returns a new OpenAI client.
-func New(
-	opts ...Option,
-) (*Client, error) {
+func New(opts ...Option) (*Client, error) {
 	c := &Client{}
 
 	for _, opt := range opts {

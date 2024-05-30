@@ -36,6 +36,6 @@ func WithBaseURL(rawURL string) Option {
 // WithHTTPClient Set custom http client.
 func WithHTTPClient(client *http.Client) Option {
 	return func(opts *options) {
-		opts.lingyiOptions = append(opts.lingyiOptions, lingyiclient.WithHttpClient(client))
+		opts.lingyiOptions = append(opts.lingyiOptions, lingyiclient.WithHTTPClient(client))
 	}
 }

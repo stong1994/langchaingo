@@ -98,6 +98,9 @@ func (c *Client) setCompletionDefaults(payload *CompletionRequest) {
 	default:
 		payload.Model = defaultCompletionModel
 	}
+	if c.httpClient == nil {
+		c.httpClient = http.DefaultClient
+	}
 }
 
 func (c *Client) createCompletion(ctx context.Context, payload *CompletionRequest) (*CompletionResponse, error) {
@@ -117,7 +120,7 @@ func (c *Client) createCompletion(ctx context.Context, payload *CompletionReques
 	if c.baseURL == "" {
 		c.baseURL = defaultBaseURL
 	}
-	req, err := http.NewRequestWithContext(ctx, http.MethodGet, fmt.Sprintf("%s/chat/completions", c.baseURL), body)
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, fmt.Sprintf("%s/chat/completions", c.baseURL), body)
 	if err != nil {
 		return nil, err
 	}
